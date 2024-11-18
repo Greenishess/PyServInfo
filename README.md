@@ -10,6 +10,10 @@ Each client only requires client.py to work. The server requires main.py and ser
 git clone https://github.com/Greenishess/PyServInfo.git
 python main.py
 ```
+If you intend to run the server on Windows, you need the [third party port](https://pypi.org/project/windows-curses/)
+```
+pip install windows-curses
+```
 # For the client
 ```
 git clone https://github.com/Greenishess/PyServInfo.git
