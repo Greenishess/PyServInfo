@@ -26,6 +26,8 @@ def handle_client(client_socket):
     client_socket.close()
 
 def start_server():
+    global ip
+    global port
     host = ip
     port = port
 
