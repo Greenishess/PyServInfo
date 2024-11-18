@@ -57,6 +57,8 @@ def checkram():
 
 
 def start_client():
+    global ip
+    global port
     host = ip
     port = port
 
