@@ -20,5 +20,5 @@ git clone https://github.com/Greenishess/PyServInfo.git
 python client.py
 ```
 # Tested Operating Systems:
-Windows
+Windows\
 Ubuntu 24.04 (I think any Linux distro will work though, but regardless, only Ubuntu 24.04 was tested)
