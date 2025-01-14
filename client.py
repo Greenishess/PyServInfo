@@ -61,20 +61,22 @@ def start_client():
     global port
     host = ip
     port = port
-
-    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect((host, port))
-    print(f"Connected to server at {host}:{port}")
+    try:
+        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client_socket.connect((host, port))
+        print(f"Connected to server at {host}:{port}")
 
         
-    while True:
-        message = (hostname + " " + checkcpu() + " " + checkram())
-        client_socket.send(message.encode())
+        while True:
+            message = (hostname + " " + checkcpu() + " " + checkram())
+            client_socket.send(message.encode())
 
             
-        response = client_socket.recv(1024).decode()
-        time.sleep(1)
+            response = client_socket.recv(1024).decode()
+            time.sleep(1)
 
+    except Exception as e: #auto reconnect
+        client_socket.close()
 
-if __name__ == "__main__":
+while True:
     start_client()
