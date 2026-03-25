@@ -5,6 +5,8 @@ import queue
 ip = "0.0.0.0" #Putting 0.0.0.0 means any IP address to the server will work
 port = 5000 #Must be an integer (no quotation marks)
 
+
+#uncomment print statements for debugging ig
 message_queue = queue.Queue()
 
 def handle_client(client_socket):
@@ -20,7 +22,7 @@ def handle_client(client_socket):
             client_socket.send(response.encode())
 
         except Exception as e:
-            print(f"Error handling client: {e}")
+            #print(f"Error handling client: {e}")
             break
 
     client_socket.close()
@@ -35,11 +37,11 @@ def start_server():
     server_socket.bind((host, port))
     server_socket.listen()
 
-    print(f"Server listening on {host}:{port}")
+    #print(f"Server listening on {host}:{port}")
 
     while True:
         client_socket, client_address = server_socket.accept()
-        print(f"Connection from {client_address}")
+        #print(f"Connection from {client_address}")
 
         client_thread = threading.Thread(target=handle_client, args=(client_socket,))
         client_thread.start()
