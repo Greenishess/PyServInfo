@@ -81,6 +81,10 @@ def draw_client_panel(stdscr, hostname: str, data: dict, start_y: int, start_x: 
 
 def draw_dashboard(stdscr):
     curses.curs_set(0)
+    curses.noecho()
+    curses.cbreak()
+    stdscr.keypad(True)
+    curses.use_default_colors()
     stdscr.nodelay(1)
     stdscr.timeout(200)
     init_colors()
@@ -106,7 +110,7 @@ def draw_dashboard(stdscr):
             except ValueError:
                 continue
 
-        stdscr.clear()
+        stdscr.erase()
         stdscr.border(0)
 
         max_rows, max_cols = stdscr.getmaxyx()
@@ -155,11 +159,11 @@ def draw_dashboard(stdscr):
         elif key == curses.KEY_DOWN:
             scroll_position = min(max_scroll, scroll_position + 1)
 
-        stdscr.refresh()
+        stdscr.noutrefresh()
+        curses.doupdate()
 
 server_thread = threading.Thread(target=server.start_server)
 server_thread.daemon = True
 server_thread.start()
-
 
 curses.wrapper(draw_dashboard)
