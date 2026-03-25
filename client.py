@@ -55,3 +55,4 @@ def start_client():
 
 while True:
     start_client()
+    time.sleep(5)
