@@ -17,8 +17,11 @@ pip install windows-curses
 # For the client
 ```
 git clone https://github.com/Greenishess/PyServInfo.git
+pip install psutil
 python client.py
 ```
 # Tested Operating Systems:
 Windows\
-Ubuntu 24.04 (I think any Linux distro will work though, but regardless, only Ubuntu 24.04 was tested)
+Arch Linux\
+Ubuntu 24.04\
+(I think any Linux distro will work though, but regardless, only Ubuntu 24.04 and Arch Linux was tested.)
