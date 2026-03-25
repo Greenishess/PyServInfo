@@ -17,7 +17,7 @@ if os.name == "posix":
         hostname = os.popen("/usr/bin/hostname").read().strip()
     except Exception as e:
         hostname = socket.gethostbyname()
-else:#fall back (idek why i kept os specific methods for hostname but wtv ig)
+if os.name != "nt" and os.name != "posix":#fall back (idek why i kept os specific methods for hostname but wtv ig)
     hostname = socket.gethostbyname()
 
 
