@@ -1,13 +1,14 @@
 import socket
 import threading
 import queue
+import json
 #Fill in the below with your IP and Port
 ip = "0.0.0.0" #Putting 0.0.0.0 means any IP address to the server will work
 port = 5000 #Must be an integer (no quotation marks)
 
-
-#uncomment print statements for debugging ig
 message_queue = queue.Queue()
+clients_data = {}
+clients_lock = threading.Lock()
 
 def handle_client(client_socket):
     while True:
@@ -16,10 +17,23 @@ def handle_client(client_socket):
             if not message:
                 break
 
-            message_queue.put(message)
+            if message.strip().lower() == "reciever":
+                with clients_lock:
+                    response = json.dumps(clients_data)
+                client_socket.send(response.encode())
 
-            response = "Message received!"
-            client_socket.send(response.encode())
+            else:
+                parts = message.split(" ")
+                if len(parts) >= 3:
+                    hostname = parts[0]
+                    cpu = parts[1]
+                    ram = parts[2]
+
+                    with clients_lock:
+                        clients_data[hostname] = {"cpu": cpu, "ram": ram}
+
+                message_queue.put(message)
+                client_socket.send("Message received!".encode())
 
         except Exception as e:
             #print(f"Error handling client: {e}")
@@ -28,16 +42,11 @@ def handle_client(client_socket):
     client_socket.close()
 
 def start_server():
-    global ip
-    global port
-    host = ip
-    port = port
-
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.bind((host, port))
+    server_socket.bind((ip, port))
     server_socket.listen()
 
-    #print(f"Server listening on {host}:{port}")
+    #print(f"Server listening on {ip}:{port}")
 
     while True:
         client_socket, client_address = server_socket.accept()
